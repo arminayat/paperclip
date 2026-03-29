@@ -1,9 +1,11 @@
 services:
   paperclip:
-    user: "1000:1000"
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: paperclip
+    user: "1000:1000"
+    restart: unless-stopped
     ports:
       - "${PAPERCLIP_PORT:-3100}:3100"
     environment:
@@ -16,4 +18,4 @@ services:
       PAPERCLIP_PUBLIC_URL: "${PAPERCLIP_PUBLIC_URL:-http://localhost:3100}"
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET must be set}"
     volumes:
-      - "${PAPERCLIP_DATA_DIR:-./data/docker-paperclip}:/paperclip"
+      - /data/paperclip:/paperclip
